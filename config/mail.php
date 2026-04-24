@@ -115,4 +115,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Notification Address
+    |--------------------------------------------------------------------------
+    |
+    | Email donde se envían las notificaciones de nuevos leads del
+    | formulario de contacto.
+    |
+    */
+
+    'notification_address' => env('NOTIFICATION_EMAIL'),
+
 ];

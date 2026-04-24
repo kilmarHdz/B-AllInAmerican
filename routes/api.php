@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\TestController;
 
 /*
@@ -15,57 +14,19 @@ use App\Http\Controllers\Api\V1\TestController;
 |
 */
 
-// Grupo de rutas API v1
 Route::prefix('v1')->group(function () {
-    
-    // ============================================
-    // RUTAS PÚBLICAS (sin autenticación)
-    // ============================================
-    
-    // Ruta de prueba
+
+    // Ruta de prueba / health check
     Route::get('/test', [TestController::class, 'index'])
         ->name('api.test');
-    
-    // Autenticación
-    Route::prefix('auth')->group(function () {
-        Route::post('/register', [AuthController::class, 'register'])
-            ->name('api.auth.register');
-        
-        Route::post('/login', [AuthController::class, 'login'])
-            ->name('api.auth.login');
-        
-        Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])
-            ->name('api.auth.forgot-password');
-    });
-    
-    // ============================================
-    // RUTAS PROTEGIDAS (requieren autenticación)
-    // ============================================
-    
-    Route::middleware('auth:sanctum')->group(function () {
-        
-        // Usuario actual
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        })->name('api.user');
-        
-        // Logout
-        Route::post('/auth/logout', [AuthController::class, 'logout'])
-            ->name('api.auth.logout');
-        
-        // Aquí agregarás más rutas protegidas según necesites
-        // Ejemplo:
-        // Route::apiResource('students', StudentController::class);
-        // Route::apiResource('teachers', TeacherController::class);
-        // Route::apiResource('courses', CourseController::class);
-    });
-    
+
+    // Formulario de contacto / captación de leads
+    Route::post('/contact', [ContactController::class, 'store'])
+        ->name('api.contact.store');
+
 });
 
-// ============================================
-// FALLBACK ROUTE (404 para rutas no encontradas)
-// ============================================
-
+// Fallback 404
 Route::fallback(function () {
     return response()->json([
         'message' => 'Endpoint no encontrado. Verifica la URL y el método HTTP.'

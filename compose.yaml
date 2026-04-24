@@ -27,14 +27,21 @@ services:
         build:
             context: ../frontend
             dockerfile: Dockerfile
+        user: '1000:1000'
         ports:
             - '3000:3000'
+            - '24678:24678'
         volumes:
             - '../frontend:/app'
             - '/app/node_modules'
+        environment:
+            - NUXT_HOST=0.0.0.0
+            - NUXT_PORT=3000
         networks:
             - sail
         tty: true
+        depends_on:
+            - laravel.test
     pgsql:
         image: 'postgres:18-alpine'
         ports:
