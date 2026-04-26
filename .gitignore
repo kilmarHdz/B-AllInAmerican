@@ -22,3 +22,15 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Docker — solo necesario si usas contenedores
+/compose.yaml
+.docker-volumes/
+
+# Base de datos SQLite local (desarrollo nativo)
+/database/*.sqlite
+!/database/.gitignore
+
+# Caché y compilados del framework (generados en runtime)
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
