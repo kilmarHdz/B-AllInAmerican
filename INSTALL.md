@@ -28,13 +28,15 @@ Con las siguientes extensiones habilitadas:
 
 ### Otras dependencias
 
-| Herramienta | Versión mínima | Propósito |
-|-------------|----------------|-----------|
-| **Composer** | 2.x | Gestor de dependencias PHP |
-| **PostgreSQL** | 14+ | Base de datos (opción recomendada) |
-| **Node.js** | 18+ | Compilación de assets frontend |
-| **npm** | 9+ | Gestor de paquetes JavaScript |
-| **Git** | cualquiera | Control de versiones |
+| Herramienta | Versión mínima | Requerida | Propósito |
+|-------------|----------------|-----------|-----------|
+| **Composer** | 2.x | Sí | Gestor de dependencias PHP |
+| **PostgreSQL** | 14+ | Sí* | Base de datos |
+| **Git** | cualquiera | Sí | Control de versiones |
+| **Node.js** | 18+ | No | Solo si necesitas compilar assets de Vite |
+| **npm** | 9+ | No | Solo si usas Node.js |
+
+> **Nota sobre Node.js:** Este proyecto es una **API pura** (no sirve vistas al usuario). Node.js solo se necesita si quieres compilar los assets del `welcome.blade.php` de Laravel, que no se usa en producción. Para el funcionamiento normal de la API **no hace falta**.
 
 > **Alternativa de BD:** Puedes usar SQLite para desarrollo local sin instalar PostgreSQL. Ver paso 4B.
 
@@ -71,11 +73,6 @@ composer --version
 sudo apt install -y postgresql postgresql-contrib
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
-
-# 6. Instalar Node.js 18+
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt install -y nodejs
-node -v && npm -v
 ```
 
 ### macOS (con Homebrew)
@@ -97,10 +94,6 @@ composer --version
 # 4. Instalar PostgreSQL (si usas opción A)
 brew install postgresql@16
 brew services start postgresql@16
-
-# 5. Instalar Node.js
-brew install node@18
-node -v && npm -v
 ```
 
 ### Windows (con Laragon — recomendado)
@@ -205,7 +198,9 @@ NOTIFICATION_EMAIL=tu-correo@gmail.com
 
 > En desarrollo puedes cambiar `MAIL_MAILER=log` para que los correos se guarden en `storage/logs/laravel.log` sin enviarlos realmente.
 
-### Paso 7 — Compilar assets frontend
+### Paso 7 — Compilar assets (opcional)
+
+> Solo necesario si quieres ver la página de bienvenida de Laravel con estilos. Para la API no hace falta.
 
 ```bash
 npm install
