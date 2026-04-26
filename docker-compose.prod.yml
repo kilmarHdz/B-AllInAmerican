@@ -9,6 +9,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    networks:
+      - default
+      - db_network
 
   american_school_web:
     build:
@@ -20,7 +23,11 @@ services:
       - "8081:80" # Expone el puerto 8081 al host VPS
     depends_on:
       - american_school_app
+    networks:
+      - default
 
-# Nota: No definimos red externa aquí. 
-# Si necesitas conectarte al contenedor "postgres" existente de la VPS,
-# asegúrate de usar la IP del host en el .env (ej. 172.17.0.1) o agregar la red.
+networks:
+  default:
+  db_network:
+    external: true
+    name: automation-stack_internal
